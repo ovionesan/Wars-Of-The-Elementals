@@ -42,13 +42,18 @@ public class OnGameOpened : MonoBehaviour
         yield return new WaitForSeconds(3.5f);
         IntroAnimator.speed = 0;
         //
-        Videos[0].enabled = true;
-        yield return new WaitForSeconds(.5f);
-        while (Videos[0].isPlaying && skip == false)
+        if(Videos[0] != null)
         {
-            yield return new WaitForSeconds(1f);
+            Videos[0].enabled = true;
+            yield return new WaitForSeconds(.5f);
+            while (Videos[0].isPlaying && skip == false)
+            {
+                yield return new WaitForSeconds(1f);
+            }
+            Videos[0].Stop();
+            
         }
-        Videos[0].Stop();
+       
         IntroAnimator.speed = 1f;
         yield return new WaitForSeconds(FadeDelay);
         while (IntroSprite.color.a > 0)
@@ -58,7 +63,11 @@ public class OnGameOpened : MonoBehaviour
             nc.a -= OutSpeed;
             IntroSprite.color = nc;
         }
-        Videos[1].enabled = true;
+        if (Videos[1] != null)
+        {
+            Videos[1].enabled = true;
+            
+        }
         Color ncbg = MenuBG.color;
         MenuScroll.gameObject.SetActive(true);
         while (MenuBG.color.a < 1 || MenuScroll.color.a < 1)
